@@ -6,6 +6,9 @@ using UnityEngine;
 public class ResultsDisplay : MonoBehaviour
 {
     List<VenueInfo> results = new List<VenueInfo>();
+
+
+    private VenueImages venueImages;
     
 
     [SerializeField]
@@ -15,16 +18,17 @@ public class ResultsDisplay : MonoBehaviour
 
     private void Awake()
     {
-        results.Add(new VenueInfo("Joe's Bar"));
-        results.Add(new VenueInfo("James's Bar"));
-        results.Add(new VenueInfo("Sophie's Bar"));
-        results.Add(new VenueInfo("Kai's Bar"));
-        results.Add(new VenueInfo("Thomas's Bar"));
-        results.Add(new VenueInfo("Kat's Bar"));
-        results.Add(new VenueInfo("Kareoke Bar"));
+        venueImages = gameObject.GetComponent<VenueImages>();
+        results.Add(new VenueInfo("Joe's Bar", "Bar"));
+        results.Add(new VenueInfo("James's Bar", "Bar"));
+        results.Add(new VenueInfo("Sophie's Bar", "Bar"));
+        results.Add(new VenueInfo("Kai's Bar", "Bar"));
+        results.Add(new VenueInfo("Thomas's Bar", "Bar"));
+        results.Add(new VenueInfo("Kat's Bar", "Bar"));
+        results.Add(new VenueInfo("Kareoke Bar", "Bar"));
         for(int i = 0; i < 10; i++)
         {
-            results.Add(new VenueInfo("Bar "+i));
+            results.Add(new VenueInfo("Bar "+i, "Bar"));
         }
     }
 
@@ -34,8 +38,9 @@ public class ResultsDisplay : MonoBehaviour
         foreach(VenueInfo result in results)
         {
             GameObject newObj = Instantiate(buttonPrefab, transform, false);
-            newObj.name = result.name;
-            newObj.GetComponent<VenueButtonController>().ChangeName(result.name);
+            VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
+            venueController.SetImage(venueImages.getImage(result.name));
+            venueController.ChangeName(result.name, result.type);
         }
     }
 }

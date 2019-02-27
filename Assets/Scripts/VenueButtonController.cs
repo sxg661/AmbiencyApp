@@ -9,10 +9,22 @@ public class VenueButtonController : MonoBehaviour
     [SerializeField]
     private Text nameText;
 
+    [SerializeField]
+    private Image venueImage;
 
-    public void ChangeName(string name)
+    [SerializeField]
+    private Text typeText;
+
+
+    public void ChangeName(string name, string type)
     {
         nameText.text = name;
+        typeText.text = type;
+    }
+
+    public void SetImage(Image venueImage)
+    {
+        this.venueImage.sprite = venueImage.sprite;
     }
     
 }
