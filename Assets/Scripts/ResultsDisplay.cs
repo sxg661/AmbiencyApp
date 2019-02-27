@@ -22,12 +22,10 @@ public class ResultsDisplay : MonoBehaviour
         results.Add(new VenueInfo("Thomas's Bar"));
         results.Add(new VenueInfo("Kat's Bar"));
         results.Add(new VenueInfo("Kareoke Bar"));
-        results.Add(new VenueInfo("Bar"));
-        results.Add(new VenueInfo("Bar"));
-        results.Add(new VenueInfo("Bar"));
-        results.Add(new VenueInfo("Bar"));
-        results.Add(new VenueInfo("Bar"));
-        results.Add(new VenueInfo("Bar"));
+        for(int i = 0; i < 10; i++)
+        {
+            results.Add(new VenueInfo("Bar "+i));
+        }
     }
 
     // Start is called before the first frame update
@@ -35,8 +33,9 @@ public class ResultsDisplay : MonoBehaviour
     {
         foreach(VenueInfo result in results)
         {
-            Instantiate(buttonPrefab, transform, false);
-            buttonPrefab.GetComponent<VenueButtonController>().ChangeName(result.name);
+            GameObject newObj = Instantiate(buttonPrefab, transform, false);
+            newObj.name = result.name;
+            newObj.GetComponent<VenueButtonController>().ChangeName(result.name);
         }
     }
 }
