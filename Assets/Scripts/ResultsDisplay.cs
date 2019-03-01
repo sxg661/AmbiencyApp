@@ -26,11 +26,8 @@ public class ResultsDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SearchCriteria searchCriteria = new SearchCriteria(new List<string> { "Club" , "Restaurant"}, 70);
 
-
-        List<VenueInfo> results = DummyServer.server.getResults(searchCriteria);
-        foreach(VenueInfo result in results)
+        foreach(VenueInfo result in DummyServer.server.getResults(SearchCriteria.criteria))
         {
             GameObject newObj = Instantiate(buttonPrefab, transform, false);
             VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();

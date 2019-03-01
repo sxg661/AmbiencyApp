@@ -9,4 +9,20 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene("SliderScene");
     }
+
+    public void Type()
+    {
+        SceneManager.LoadScene("VenueScene");
+    }
+
+    public void Result()
+    {
+        SceneManager.LoadScene("ResultsScene");
+    }
+
+    public void StartScene()
+    {
+        SceneManager.LoadScene("LocationScene");
+    }
+
 }
