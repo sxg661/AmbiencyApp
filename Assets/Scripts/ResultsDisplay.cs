@@ -26,7 +26,7 @@ public class ResultsDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SearchCriteria searchCriteria = new SearchCriteria(new List<string> { "Club" , "Bar"}, 70);
+        SearchCriteria searchCriteria = new SearchCriteria(new List<string> { "Club" , "Restaurant"}, 70);
 
 
         List<VenueInfo> results = DummyServer.server.getResults(searchCriteria);

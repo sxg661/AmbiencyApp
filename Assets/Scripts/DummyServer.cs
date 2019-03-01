@@ -18,8 +18,8 @@ public class DummyServer
         results.Add(new VenueInfo("James's Cafe", "Restaurant", 90, 0.5f));
         results.Add(new VenueInfo("Sophie's Super Disco", "Club", 100, 0.7f));
         results.Add(new VenueInfo("Kai's Bar", "Bar", 100, 0.7f));
-        results.Add(new VenueInfo("Thomas's Jazz Club", "Club", 10, 1f));
-        results.Add(new VenueInfo("Kat's Sushi Bar", "Restaurant", 50, 1.4f));
+        results.Add(new VenueInfo("Thomas's Jazz Club", "Club", 70, 1f));
+        results.Add(new VenueInfo("Kat's Sushi Bar", "Restaurant", 68, 0.1f));
         results.Add(new VenueInfo("Kareoke Bar", "Bar", 40, 2f));
         for (int i = 0; i < 10; i++)
         {
