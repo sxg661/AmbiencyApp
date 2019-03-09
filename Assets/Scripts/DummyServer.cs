@@ -10,7 +10,7 @@ public class DummyServer
 
     List<VenueInfo> results = new List<VenueInfo>();
 
-    private SearchCriteria criteria;
+    private SearchCriteria criteria = new SearchCriteria();
 
     public DummyServer()
     {

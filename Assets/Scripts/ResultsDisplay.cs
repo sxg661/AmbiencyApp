@@ -6,7 +6,7 @@ using UnityEngine;
 public class ResultsDisplay : MonoBehaviour
 {
 
-
+    private List<GameObject> renderedButtons = new List<GameObject>();
 
     private VenueImages venueImages;
     
@@ -23,15 +23,25 @@ public class ResultsDisplay : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void ClearResults()
     {
+        foreach(GameObject button in renderedButtons)
+        {
+            Destroy(button);
+        }
+        renderedButtons = new List<GameObject>();
+    }
+
+    public void DisplayResults()
+    {
+        ClearResults();
 
         foreach(VenueInfo result in DummyServer.server.getResults(SearchCriteria.criteria))
         {
             GameObject newObj = Instantiate(buttonPrefab, transform, false);
             VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
             venueController.LoadVenue(result, venueImages.getImage(result.name));
+            renderedButtons.Add(newObj);
         }
     }
 }
