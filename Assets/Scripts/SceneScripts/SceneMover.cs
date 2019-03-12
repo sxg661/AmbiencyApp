@@ -10,40 +10,59 @@ public class SceneMover : MonoBehaviour
     float timeSinceStart;
     float timeForTransition = 0.5f;
 
-    public int transFromStart = 0;
-
     Vector3 startPos;
     Vector3 goalPos;
 
+    bool backEnabled;
+
     [SerializeField]
     private Vector3 defaultPos;
+
+    private Vector3 currentPos;
 
 
     private void Start()
     {
         rectTrans = GetComponent<RectTransform>();
         rectTrans.localPosition = defaultPos;
+        currentPos = defaultPos;
     }
 
     public void MoveToLeft()
     {
         moving = true;
         timeSinceStart = 0;
-        startPos = rectTrans.localPosition;
+        startPos = currentPos;
         goalPos = new Vector3(startPos[0] - 1500, startPos[1], 0);
-        transFromStart += 1;
     }
 
     public void MoveToRight()
     {
-        if(transFromStart > 0)
+        if(currentPos[0]  < defaultPos[0] && backEnabled)
         {
             moving = true;
             timeSinceStart = 0;
-            startPos = rectTrans.localPosition;
+            startPos = currentPos;
             goalPos = new Vector3(startPos[0] + 1500, startPos[1], 0);
-            transFromStart -= 1;
         }
+    }
+
+    public void TeleToPosition(float x)
+    {
+        currentPos = new Vector3(x, currentPos[1], 0);
+        rectTrans.localPosition = currentPos;
+    }
+
+    public void disableBackButton()
+    {
+        backEnabled = false;
+    }
+
+    public void TeleToDefault()
+    {
+        currentPos = defaultPos;
+        rectTrans.localPosition = defaultPos;
+        backEnabled = true;
     }
 
     // Update is called once per frame
@@ -57,6 +76,7 @@ public class SceneMover : MonoBehaviour
             {
                 rectTrans.localPosition = goalPos;
                 moving = false;
+                currentPos = goalPos;
                 return;
             }
 
