@@ -44,19 +44,24 @@ public class FilteredSearch : MonoBehaviour
 
     private void Start()
     {
-        lightScale = new Scale(lightFill, "lux", 0, 5, 10);
+        lightScale = new QualitativeScale(lightFill, "lux", 0, 5, 10,
+            new List<(int, string)> { (1, "Very Dark"),(10,"Dark"), (100, "Dim"), (1000, "Bright"), (10000, "Very Bright") });
         scales.Add((lightScale, lightText));
 
-        temperatureScale = new Scale(temperatureFill, "oC", 10, 30);
+        temperatureScale = new QualitativeScale(temperatureFill, "oC", 10, 30,
+            new List<(int, string)> { (10, "Cold"), (15, "Chilly"), (20, "Warm"), (25, "Hot") });
         scales.Add((temperatureScale, temperatureText));
 
-        soundScale = new Scale(soundFill, "dB", 0, 90);
+        soundScale = new QualitativeScale(soundFill, "dB", 0, 90, 
+            new List<(int, string)> { (0, "Silent"), (20, "Quiet"), (50, "Normal"), (70, "Noisy") });
         scales.Add((soundScale, soundText));
 
-        occupancyScale = new Scale(occpuancyFill, "%", 0, 100);
+        occupancyScale = new QualitativeScale(occpuancyFill, "%", 0, 100,
+            new List<(int, string)> { (0, "Empty"), (25, "Uncrowded"), (50, "Busy"), (75, "Packed") });
         scales.Add((occupancyScale, OccupancyText));
 
-        humidityScale = new Scale(humidityFill, "%", 0, 100);
+        humidityScale = new QualitativeScale(humidityFill, "%", 0, 100,
+            new List<(int, string)> { (0, "Dry"), (30, "Normal"), (60, "Humid") });
         scales.Add((humidityScale, humiditiyText));
 
         

@@ -17,10 +17,10 @@ public class DummyServer
         results.Add(new VenueInfo("Joe's Bar", "Bar", 50, 0, 50, 1000, 23, 60));
         results.Add(new VenueInfo("James's Cafe", "Restaurant", 90, 0.5f, 80, 900, 26, 80));
         results.Add(new VenueInfo("Sophie's Super Disco", "Club", 100, 0.7f, 90, 100, 30, 95));
-        results.Add(new VenueInfo("Kai's Bar", "Bar", 95, 0.3f, 90, 100, 25, 80));
+        results.Add(new VenueInfo("Kai's", "Bar", 95, 0.3f, 90, 100, 25, 80));
         results.Add(new VenueInfo("Thomas's Jazz Club", "Club", 70, 1f, 40, 700, 21, 110));
         results.Add(new VenueInfo("Kat's Sushi Bar", "Restaurant", 13, 0.1f, 30, 3000, 18, 40));
-        results.Add(new VenueInfo("Kareoke Bar", "Bar", 40, 2f, 50, 1000, 21, 70));
+        results.Add(new VenueInfo("Beer Garden", "Bar", 40, 2f, 50, 1000, 21, 70));
         for (int i = 0; i < 10; i++)
         {
             results.Add(new VenueInfo("Bar " + i, "Bar", i * 10, 2f + i, 50, 1000, 25, 70 ));

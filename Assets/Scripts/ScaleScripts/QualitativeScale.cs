@@ -21,19 +21,29 @@ public class QualitativeScale : Scale {
         this.intervals = intervals;
     }
 
+
+
     public override string GetLabel()
     {
         float myValue = GetValue();
 
-        foreach((int, string) interval in intervals)
+        for(int i = 0; i < intervals.Count; i++)
         {
-            if(myValue > interval.Item1)
+            if(i == intervals.Count - 1)
             {
-                return (string.Format(interval.Item2) + " ({0:0.00}" + unit + ")");
+                return intervals[i].Item2;
             }
+
+            if(myValue >= intervals[i].Item1 && myValue < intervals[i + 1].Item1)
+            {
+                return intervals[i].Item2;
+            }
+
+
         }
 
-        return "SCALE ERROR Intervals don't start a beggiging of range";
+        return "ERROR";
+
 
     }
    
