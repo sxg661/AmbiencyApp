@@ -65,6 +65,12 @@ public class SceneMover : MonoBehaviour
         backEnabled = true;
     }
 
+    public void TeleToDefaultOrder(int n)
+    {
+        currentPos = new Vector3(defaultPos[0] - n * 1500, defaultPos[1], 0);
+        rectTrans.localPosition = currentPos;
+    }
+
     // Update is called once per frame
     void Update()
     {

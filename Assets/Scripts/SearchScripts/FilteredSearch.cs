@@ -64,8 +64,12 @@ public class FilteredSearch : MonoBehaviour
             new List<(int, string)> { (0, "Dry"), (30, "Normal"), (60, "Humid") });
         scales.Add((humidityScale, humiditiyText));
 
-        
+    }
 
+    public void AddSearchCriteria()
+    {
+        SearchCriteria.criteria.AddFilteredsearch(
+            occupancyScale.GetValue(), lightScale.GetValue(), humidityScale.GetValue(), temperatureScale.GetValue(), soundScale.GetValue());
     }
 
     // Update is called once per frame

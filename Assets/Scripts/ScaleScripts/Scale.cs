@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Scale { 
 
@@ -44,7 +45,7 @@ public class Scale {
 
     public void ResetBar()
     {
-        myFill.GetComponent<RectTransform>().anchorMax = new Vector2(0,0);
+        myFill.GetComponent<Slider>().value = 0;
     }
 
     public float GetValue()
@@ -62,6 +63,25 @@ public class Scale {
                 return 0;
 
         }
+    }
+
+    public void setScalePos(float value)
+    {
+        switch (myType)
+        {
+            case ScaleType.LOGARITHMIC:
+                float exponent = Mathf.Log(value) / Mathf.Log(10);
+                myFill.GetComponent<Slider>().value = (exponent - min) / (max - min);
+                break;
+            case ScaleType.LINEAR:
+                myFill.GetComponent<Slider>().value = (value - min) / (max - min);
+                break;
+            default:
+                ResetBar();
+                break;
+                
+        }
+        
     }
    
 

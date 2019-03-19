@@ -8,25 +8,37 @@ public struct SearchCriteria
 
     public static SearchCriteria criteria = new SearchCriteria();
 
-    public SearchCriteria(List<String> types, int occupancy)
-    {
-        this.types = types;
-        this.occupancy = occupancy;
-    }
 
     public SearchCriteria(List<String> types)
     {
         this.types = types;
         occupancy = null;
+        light = null;
+        humidity = null;
+        temperature = null;
+        sound = null;
     }
 
-    public void AddOccupancy(int occupancy)
+
+    public void AddFilteredsearch(float occ, float light, float humid, float temp, float sound)
     {
-        this.occupancy = occupancy;
+        occupancy = occ;
+        this.light = light;
+        humidity = humid;
+        temperature = temp;
+        this.sound = sound;
     }
 
     public List<string> types;
 
-    public int? occupancy;
+    public float? occupancy;
+
+    public float? light;
+
+    public float? humidity;
+
+    public float? temperature;
+
+    public float? sound;
 
 }
