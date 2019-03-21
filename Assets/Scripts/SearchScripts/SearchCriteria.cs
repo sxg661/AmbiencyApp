@@ -3,11 +3,20 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public struct SearchCriteria
+public class SearchCriteria
 {
 
     public static SearchCriteria criteria = new SearchCriteria();
 
+    public SearchCriteria()
+    {
+        this.types = new List<String>(); ;
+        occupancy = null;
+        light = null;
+        humidity = null;
+        temperature = null;
+        sound = null;
+    }
 
     public SearchCriteria(List<String> types)
     {

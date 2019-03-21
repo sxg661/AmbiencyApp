@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FilteredSearch : MonoBehaviour
 {
-    private enum ScaleType { REGULAR, LOGARITHMIC}
+    private enum ScaleType { REGULAR, LOGARITHMIC }
 
     [SerializeField]
     private GameObject lightFill;

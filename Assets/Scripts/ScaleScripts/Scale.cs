@@ -50,7 +50,7 @@ public class Scale {
 
     public float GetValue()
     {
-        float scaleValue = myFill.GetComponent<RectTransform>().anchorMax.x;
+        float scaleValue = myFill.GetComponent<Slider>().value;
 
         switch (myType)
         {
@@ -67,6 +67,8 @@ public class Scale {
 
     public void setScalePos(float value)
     {
+        Mathf.Clamp(value, min, max);
+
         switch (myType)
         {
             case ScaleType.LOGARITHMIC:

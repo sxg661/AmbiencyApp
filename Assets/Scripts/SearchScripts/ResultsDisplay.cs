@@ -9,17 +9,34 @@ public class ResultsDisplay : MonoBehaviour
     private List<GameObject> renderedButtons = new List<GameObject>();
 
     private VenueImages venueImages;
+
+    private Client myClient;
     
 
     [SerializeField]
     private GameObject buttonPrefab;
 
+    private void Update()
+    {
+        if (!myClient.NewResults())
+        {
+            return;
+        }
 
+        ClearResults();
+        foreach (VenueInfo result in myClient.GetResults())
+        {
+            GameObject newObj = Instantiate(buttonPrefab, transform, false);
+            VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
+            venueController.LoadVenue(result, venueImages.getImage(result.name));
+            renderedButtons.Add(newObj);
+        }
+    }
 
     private void Awake()
     {
         venueImages = gameObject.GetComponent<VenueImages>();
-        
+        myClient = new DummyClient();
 
     }
 
@@ -36,12 +53,10 @@ public class ResultsDisplay : MonoBehaviour
     {
         ClearResults();
 
-        foreach(VenueInfo result in DummyServer.server.getResults(SearchCriteria.criteria))
-        {
-            GameObject newObj = Instantiate(buttonPrefab, transform, false);
-            VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
-            venueController.LoadVenue(result, venueImages.getImage(result.name));
-            renderedButtons.Add(newObj);
-        }
+        myClient.RequestResults(SearchCriteria.criteria);
+
+       
     }
+
+
 }

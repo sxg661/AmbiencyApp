@@ -3,48 +3,33 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 
-public class DummyServer
+public abstract class Client
 {
 
-    public static DummyServer server = new DummyServer();
+    protected static Client client;
 
     List<VenueInfo> results = new List<VenueInfo>();
 
-    private SearchCriteria criteria = new SearchCriteria();
+    private int socket;
 
-    public DummyServer()
+    protected SearchCriteria criteria = new SearchCriteria();
+
+    public Client(int socket)
     {
-        results.Add(new VenueInfo("Joe's Bar", "Bar", 50, 0, 50, 1000, 23, 60));
-        results.Add(new VenueInfo("James's Cafe", "Restaurant", 90, 0.5f, 80, 900, 26, 80));
-        results.Add(new VenueInfo("Sophie's Super Disco", "Club", 100, 0.7f, 90, 100, 30, 95));
-        results.Add(new VenueInfo("Kai's", "Bar", 95, 0.3f, 90, 100, 25, 80));
-        results.Add(new VenueInfo("Thomas's Jazz Club", "Club", 70, 1f, 40, 700, 21, 110));
-        results.Add(new VenueInfo("Kat's Sushi Bar", "Restaurant", 13, 0.1f, 30, 3000, 18, 40));
-        results.Add(new VenueInfo("Beer Garden", "Bar", 40, 2f, 50, 1000, 21, 70));
-        results.Add(new VenueInfo("Study Library", "Library", 40, 1, 50, 10000, 19, 40));
-        results.Add(new VenueInfo("Bad Libary", "Library", 90, 1, 80, 1000, 13, 70));
-        for (int i = 0; i < 10; i++)
-        {
-            results.Add(new VenueInfo("Bar " + i, "Bar", i * 10, 2f + i, 50, 1000, 25, 70 ));
-        }
+        this.socket = socket;
     }
 
-   
+    public abstract bool NewResults();
 
-   
+    public abstract List<VenueInfo> GetResults();
 
-    public List<VenueInfo> getResults( SearchCriteria criteria)
-    {
-        this.criteria = criteria;
-        List<VenueInfo> newResults = filter(results);
-        newResults.Sort(CompareVenues);
-        return newResults;
-    }
+    public abstract void RequestResults(SearchCriteria criteria);
+    
 
     public List<VenueInfo> filter(List<VenueInfo> venues)
     {
         List<VenueInfo> newVenues = new List<VenueInfo>();
-        foreach(VenueInfo venue in venues)
+        foreach (VenueInfo venue in venues)
         {
             if (inclueInResult(venue))
             {
@@ -56,7 +41,9 @@ public class DummyServer
 
     public bool inclueInResult(VenueInfo venue)
     {
-        foreach(string type in criteria.types)
+
+        Debug.Log(criteria);
+        foreach (string type in criteria.types)
         {
             if (type.Equals(venue.type))
             {
@@ -67,7 +54,6 @@ public class DummyServer
     }
 
 
-
     public int CompareVenues(VenueInfo venue1, VenueInfo venue2)
     {
         float venue1Score = 0;
@@ -75,10 +61,10 @@ public class DummyServer
 
         //all the factors add a value in the range 0-20 to the score
 
-        if(criteria.occupancy.HasValue)
+        if (criteria.occupancy.HasValue)
         {
-            venue1Score += Mathf.Abs((venue1.occupancy - criteria.occupancy.Value))/5 ;
-            venue2Score += Mathf.Abs((venue2.occupancy - criteria.occupancy.Value))/5 ;
+            venue1Score += Mathf.Abs((venue1.occupancy - criteria.occupancy.Value)) / 5;
+            venue2Score += Mathf.Abs((venue2.occupancy - criteria.occupancy.Value)) / 5;
         }
 
         if (criteria.light.HasValue)
