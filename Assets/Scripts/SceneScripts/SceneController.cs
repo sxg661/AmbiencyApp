@@ -25,9 +25,13 @@ public class SceneController : MonoBehaviour
     private List<SceneMover> scenes;
     private Button backButton;
 
+    [SerializeField]
+    private Button homeButton;
+
     bool quickSearch = false;
 
     public int sceneNum = 0;
+    public SceneMover currentScene;
 
    
 
@@ -107,7 +111,7 @@ public class SceneController : MonoBehaviour
         }
 
         //put results scene back
-        resultsScene.GetComponent<SceneMover>().TeleToPosition(0);
+        currentScene.TeleToPosition(0);
 
         //get the start screne
         startScene.GetComponent<SceneMover>().TeleToPosition(-1500);
@@ -144,5 +148,7 @@ public class SceneController : MonoBehaviour
     public void Update()
     {
         backButton.interactable = sceneNum != 0;
+        homeButton.interactable = sceneNum != 0;
+        currentScene = scenes[sceneNum];
     }
 }

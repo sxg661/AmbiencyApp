@@ -14,10 +14,6 @@ public abstract class Client
 
     protected SearchCriteria criteria = new SearchCriteria();
 
-    public Client(int socket)
-    {
-        this.socket = socket;
-    }
 
     public abstract bool NewResults();
 
@@ -94,8 +90,8 @@ public abstract class Client
             venue1Score += Mathf.Abs((venue2.temperature - criteria.temperature.Value));
         }
 
-        venue1Score += venue1.dist;
-        venue2Score += venue2.dist;
+        venue1Score += venue1.dist * 2;
+        venue2Score += venue2.dist * 2;
 
         if (venue1Score == venue2Score)
         {

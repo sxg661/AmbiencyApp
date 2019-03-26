@@ -36,7 +36,7 @@ public class ResultsDisplay : MonoBehaviour
     private void Awake()
     {
         venueImages = gameObject.GetComponent<VenueImages>();
-        myClient = new DummyClient();
+        myClient = new NetworkClient();
 
     }
 

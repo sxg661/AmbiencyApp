@@ -11,7 +11,7 @@ public class DummyClient : Client
     bool changed;
 
 
-    public DummyClient() : base(1)
+    public DummyClient()
     {
         results.Add(new VenueInfo("Joe's Bar", "Bar", 50, 0, 50, 1000, 23, 60));
         results.Add(new VenueInfo("James's Cafe", "Restaurant", 90, 0.5f, 80, 900, 26, 80));
