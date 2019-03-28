@@ -13,13 +13,10 @@ public abstract class Client
     private int socket;
 
     protected SearchCriteria criteria = new SearchCriteria();
+ 
+    public abstract List<VenueInfo> RequestResults(SearchCriteria criteria);
 
-
-    public abstract bool NewResults();
-
-    public abstract List<VenueInfo> GetResults();
-
-    public abstract void RequestResults(SearchCriteria criteria);
+    public abstract void CloseConnection();
     
 
     public List<VenueInfo> filter(List<VenueInfo> venues)

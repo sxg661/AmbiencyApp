@@ -581,7 +581,6 @@ GameObject:
   - component: {fileID: 3084689373998718762}
   - component: {fileID: 3084689373998718763}
   - component: {fileID: 3084689373998718765}
-  - component: {fileID: 7335214930781979145}
   - component: {fileID: 3509346535936734291}
   m_Layer: 0
   m_Name: PopUp
@@ -677,18 +676,6 @@ MonoBehaviour:
   soundFill: {fileID: 3949149424675447758}
   occFill: {fileID: 3949149423371625865}
   humidFill: {fileID: 3949149424271832194}
---- !u!114 &7335214930781979145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3084689373998718761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 756361d4c6830d047b1e340f875cbaf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3509346535936734291
 BoxCollider2D:
   m_ObjectHideFlags: 0

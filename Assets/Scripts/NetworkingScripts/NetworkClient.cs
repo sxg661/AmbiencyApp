@@ -17,13 +17,32 @@ public class NetworkClient : Client
     private StreamReader clientIn;
     private StreamWriter clientOut;
 
+    private SocketWrapper wrapper;
+
     bool newResults = false;
 
     List<VenueInfo> results = new List<VenueInfo>();
 
-    public static void RecievingThread()
+
+    public void ReadInData()
     {
-        Console.WriteLine("Child thread starts");
+        Debug.Log("wooo");
+        if (wrapper.DataToRead())
+        {
+            Debug.Log("Hello!!!");
+            string command = wrapper.ReadLine();
+
+            switch (command)
+            {
+                case "VENUE":
+                    string venue = wrapper.ReadLine();
+                    Debug.Log(venue);
+                    break;
+                default :
+                    Debug.Log("Unknown command recieved from server: " + command);
+                    break;
+            }
+        }
     }
 
 
@@ -31,61 +50,68 @@ public class NetworkClient : Client
     {
         
         port = 12345;
-        client = new TcpClient("localhost", port);
+        // client = new TcpClient("localhost", port);
+        client = new TcpClient("192.168.43.71", port);
         clientIn = new StreamReader(client.GetStream());
         clientOut = new StreamWriter(client.GetStream());
 
-        SocketWrapper clientWrapper = new SocketWrapper(clientIn, clientOut,client);
-        //clientWrapper.AddMessages("hello\nthere\n\nmy name is ron\n\n");
+        wrapper = new SocketWrapper(clientIn, clientOut,client);
+        wrapper.WriteLine("app");
+        Debug.Log(wrapper.ReadLine());
+      
 
-        
-        clientWrapper.WriteLine("app");
-        Debug.Log("read: "+clientWrapper.ReadLine());
-        
-        //string messages = clientIn.ReadLine();
-        //Debug.Log(messages);
 
-        
-        clientWrapper.WriteLine("money, please");
-        Debug.Log("read: " + clientWrapper.ReadLine());
 
-        clientWrapper.WriteLine("SEARCH");
-        clientWrapper.WriteLine("Bar");
+    }
 
-        Debug.Log("read: " + clientWrapper.ReadLine());
-        Debug.Log("read: " + clientWrapper.ReadLine());
-        Debug.Log("read: " + clientWrapper.ReadLine());
+    private void addVenue(string venue)
+    {
+        string[] paramaters = venue.Split('|');
+        Debug.Log(paramaters[5]);
+        results.Add(new VenueInfo(
+            paramaters[1], paramaters[2], float.Parse(paramaters[3]), float.Parse(paramaters[4])
+            , float.Parse(paramaters[5]), float.Parse(paramaters[6]), float.Parse(paramaters[7]), float.Parse(paramaters[8])));
+    }
 
-        clientWrapper.WriteLine("DISCONNECT");
-        Debug.Log("read: " + clientWrapper.ReadLine());
+
+
+    public override List<VenueInfo> RequestResults(SearchCriteria criteria)
+    {
+        results = new List<VenueInfo>();
+        wrapper.WriteLine("SEARCH");
+        wrapper.WriteLine(criteria.types[0]);
+
+        bool running = true;
+        while (running)
+        {
+            string command = wrapper.ReadLine();
+
+            switch (command)
+            {
+                case "VENUE":
+                    string newVenue = (wrapper.ReadLine());
+                    Debug.Log("Recieved Venue: "+ newVenue);
+                    addVenue(newVenue); ;
+                    break;
+                case "DISPLAY":
+                    running = false;
+                    break;
+            }
+        }
+
+        results.Sort(CompareVenues);
+        return results ;
+    }
+
+    public override void CloseConnection()
+    {
+        wrapper.WriteLine("DISCONNECT");
+        Debug.Log(wrapper.ReadLine());
 
 
 
         clientIn.Close();
         clientOut.Close();
         client.Close();
-
-    }
-
-
-    public override List<VenueInfo> GetResults()
-    {
-        return new List<VenueInfo>();
-    }
-
-    public override bool NewResults()
-    {
-        if (newResults)
-        {
-            newResults = false;
-            return true;
-        }
-
-        return false;
-    }
-
-    public override void RequestResults(SearchCriteria criteria)
-    {
-        return;
     }
 }

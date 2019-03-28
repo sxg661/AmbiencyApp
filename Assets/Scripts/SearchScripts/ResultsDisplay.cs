@@ -18,19 +18,10 @@ public class ResultsDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (!myClient.NewResults())
-        {
-            return;
-        }
 
-        ClearResults();
-        foreach (VenueInfo result in myClient.GetResults())
-        {
-            GameObject newObj = Instantiate(buttonPrefab, transform, false);
-            VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
-            venueController.LoadVenue(result, venueImages.getImage(result.name));
-            renderedButtons.Add(newObj);
-        }
+
+       
+
     }
 
     private void Awake()
@@ -52,10 +43,20 @@ public class ResultsDisplay : MonoBehaviour
     public void DisplayResults()
     {
         ClearResults();
+        foreach (VenueInfo result in myClient.RequestResults(SearchCriteria.criteria))
+        {
+            GameObject newObj = Instantiate(buttonPrefab, transform, false);
+            VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
+            venueController.LoadVenue(result, venueImages.getImage(result.name));
+            renderedButtons.Add(newObj);
+        }
 
-        myClient.RequestResults(SearchCriteria.criteria);
 
-       
+    }
+
+    public void OnApplicationQuit()
+    {
+        myClient.CloseConnection();
     }
 
 

@@ -31,28 +31,23 @@ public class DummyClient : Client
 
 
 
-    public override void RequestResults(SearchCriteria criteria)
+    public override List<VenueInfo> RequestResults(SearchCriteria criteria)
     {
         //in a real client the network call would be made HERE
         this.criteria = criteria;
-        changed = true;
-    }
-
-    public override bool NewResults()
-    {
-        return changed;
-    }
-
-    public override List<VenueInfo> GetResults()
-    {
         List<VenueInfo> newResults = filter(results);
         newResults.Sort(CompareVenues);
-        changed = false;
         return newResults;
+    }
+
+ 
+    public override void CloseConnection()
+    {
+        Debug.Log("Disconnected");
     }
 
     //DO THREAD STUFF HERE I WILL LEARN HOW TO DO THIS...
 
 
-    
+
 }
