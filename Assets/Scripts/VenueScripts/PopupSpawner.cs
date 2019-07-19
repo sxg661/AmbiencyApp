@@ -20,6 +20,8 @@ public class PopupSpawner : MonoBehaviour
     private void Awake()
     {
         spawner = this;
+        popUp = Instantiate(popupPrefab, popupCanvas.transform, false);
+        killPopup();
     }
 
     public void spawnPopup(VenueInfo venue, Image venueImage)
@@ -33,7 +35,7 @@ public class PopupSpawner : MonoBehaviour
 
     public void killPopup()
     {
-        popUp.GetComponent<PopupController>().Dissapear();
+        popUp.GetComponent<PopupController>().Dissapear();    
     }
 
     

@@ -19,16 +19,24 @@ public class Scale {
 
     protected int logNum;
 
-    public Scale(GameObject myFill, string unit, int min, int max)
+    protected int scaleMax;
+
+
+    public Scale(GameObject myFill, string unit, int min, int max, int scaleMax)
     {
         myType = ScaleType.LINEAR;
         this.myFill = myFill;
         this.unit = unit;
         this.min = min;
         this.max = max;
+        this.scaleMax = scaleMax;
+
+        myFill.GetComponent<Slider>().maxValue = scaleMax;
+
+
     }
 
-    public Scale(GameObject myFill, string unit, int min, int max, int logNum)
+    public Scale(GameObject myFill, string unit, int min, int max, int scaleMax, int logNum)
     {
         myType = ScaleType.LOGARITHMIC;
         this.myFill = myFill;
@@ -36,6 +44,9 @@ public class Scale {
         this.min = min;
         this.max = max;
         this.logNum = logNum;
+        this.scaleMax = scaleMax;
+
+        myFill.GetComponent<Slider>().maxValue = scaleMax;
     }
 
     public virtual string GetLabel()
@@ -50,15 +61,15 @@ public class Scale {
 
     public float GetValue()
     {
-        float scaleValue = myFill.GetComponent<RectTransform>().anchorMax.x;
+        float scaleValue = myFill.GetComponent<Slider>().value/ scaleMax;
 
         switch (myType)
         {
             case ScaleType.LOGARITHMIC:
                 float exponent = min + scaleValue * (max - min);
-                return Mathf.Pow(logNum, exponent);
+                return (Mathf.Pow(logNum, exponent));
             case ScaleType.LINEAR:
-                return min + scaleValue * (max - min);
+                return (min + scaleValue * (max - min));
             default:
                 return 0;
 
@@ -67,14 +78,16 @@ public class Scale {
 
     public void setScalePos(float value)
     {
+        Mathf.Clamp(value, min, max);
+
         switch (myType)
         {
             case ScaleType.LOGARITHMIC:
                 float exponent = Mathf.Log(value) / Mathf.Log(10);
-                myFill.GetComponent<Slider>().value = (exponent - min) / (max - min);
+                myFill.GetComponent<Slider>().value = ((exponent - min) / (max - min)) * scaleMax;
                 break;
             case ScaleType.LINEAR:
-                myFill.GetComponent<Slider>().value = (value - min) / (max - min);
+                myFill.GetComponent<Slider>().value = ((value - min) / (max - min)) * scaleMax;
                 break;
             default:
                 ResetBar();

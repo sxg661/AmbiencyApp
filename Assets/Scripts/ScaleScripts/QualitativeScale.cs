@@ -9,14 +9,14 @@ public class QualitativeScale : Scale {
     /// </summary>
     List<(int, string)> intervals = new List<(int, string)>();
 
-    public QualitativeScale(GameObject myFill, string unit, int min, int max, List<(int,string)> intervals) : 
-        base(myFill, unit, min, max)
+    public QualitativeScale(GameObject myFill, string unit, int min, int max, int scaleMax, List<(int,string)> intervals) : 
+        base(myFill, unit, min, max, scaleMax)
     {
         this.intervals = intervals;
     }
 
-    public QualitativeScale(GameObject myFill, string unit, int min, int max, int logNum, List<(int,string)> intervals) :
-        base(myFill, unit, min, max, logNum)
+    public QualitativeScale(GameObject myFill, string unit, int min, int max, int scaleMax, int logNum, List<(int,string)> intervals) :
+        base(myFill, unit, min, max, scaleMax, logNum)
     {
         this.intervals = intervals;
     }

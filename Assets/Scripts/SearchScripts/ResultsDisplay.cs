@@ -5,21 +5,31 @@ using UnityEngine;
 
 public class ResultsDisplay : MonoBehaviour
 {
+    public static ResultsDisplay display;
 
     private List<GameObject> renderedButtons = new List<GameObject>();
 
     private VenueImages venueImages;
+
+    private Client myClient;
     
 
     [SerializeField]
     private GameObject buttonPrefab;
 
+    private void Update()
+    {
 
+
+       
+
+    }
 
     private void Awake()
     {
         venueImages = gameObject.GetComponent<VenueImages>();
-        
+        myClient = new NetworkClient();
+        display = this;
 
     }
 
@@ -35,13 +45,21 @@ public class ResultsDisplay : MonoBehaviour
     public void DisplayResults()
     {
         ClearResults();
-
-        foreach(VenueInfo result in DummyServer.server.getResults(SearchCriteria.criteria))
+        foreach (VenueInfo result in myClient.RequestResults(SearchCriteria.criteria))
         {
             GameObject newObj = Instantiate(buttonPrefab, transform, false);
             VenueButtonController venueController = newObj.GetComponent<VenueButtonController>();
             venueController.LoadVenue(result, venueImages.getImage(result.name));
             renderedButtons.Add(newObj);
         }
+
+
     }
+
+    public void OnApplicationQuit()
+    {
+        myClient.CloseConnection();
+    }
+
+
 }

@@ -36,24 +36,24 @@ public class PopupController : MonoBehaviour
 
     public void LoadVenue(VenueInfo venue, Image venueImage)
     {
-        Scale lightScale = new Scale(lightFill, "", 0, 5, 10);
+        Scale lightScale = new Scale(lightFill, "", 0, 5, 1, 10);
         lightScale.setScalePos(venue.light);
 
-        Scale tempScale = new Scale(tempFill, "", 10, 30);
+        Scale tempScale = new Scale(tempFill, "", 10, 30, 1);
         tempScale.setScalePos(venue.temperature);
 
-        Scale soundScale = new Scale(soundFill, "", 0, 90);
+        Scale soundScale = new Scale(soundFill, "", 0, 90, 1);
         soundScale.setScalePos(venue.sound);
 
-        Scale occScale = new Scale(occFill, "", 0, 100);
+        Scale occScale = new Scale(occFill, "", 0, 100, 1);
         occScale.setScalePos(venue.occupancy);
 
-        Scale humidScale = new Scale(humidFill, "", 0, 100);
+        Scale humidScale = new Scale(humidFill, "", 0, 100, 1);
         humidScale.setScalePos(venue.humidity);
 
         nameText.GetComponent<Text>().text = venue.name;
 
-        distText.GetComponent<Text>().text = string.Format("{0:0.0}m", venue.dist);
+        distText.GetComponent<Text>().text = string.Format("Dist: {0:0.0}m", venue.dist);
 
         this.venueImage = venuePic.GetComponent<Image>();
 
