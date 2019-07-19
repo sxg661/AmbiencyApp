@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ResultsDisplay : MonoBehaviour
 {
+    public static ResultsDisplay display;
 
     private List<GameObject> renderedButtons = new List<GameObject>();
 
@@ -28,6 +29,7 @@ public class ResultsDisplay : MonoBehaviour
     {
         venueImages = gameObject.GetComponent<VenueImages>();
         myClient = new NetworkClient();
+        display = this;
 
     }
 

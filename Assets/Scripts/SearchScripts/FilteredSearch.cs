@@ -68,8 +68,12 @@ public class FilteredSearch : MonoBehaviour
 
     public void AddSearchCriteria()
     {
+        Debug.Log("light Value = " + temperatureScale.GetValue());
         SearchCriteria.criteria.AddFilteredsearch(
-            occupancyScale.GetValue(), lightScale.GetValue(), humidityScale.GetValue(), temperatureScale.GetValue(), soundScale.GetValue());
+            occupancyScale.GetValue(), lightScale.GetValue(), 
+            humidityScale.GetValue(), temperatureScale.GetValue(), 
+            soundScale.GetValue());
+        ResultsDisplay.display.DisplayResults();
     }
 
     // Update is called once per frame

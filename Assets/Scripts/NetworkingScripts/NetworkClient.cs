@@ -51,7 +51,7 @@ public class NetworkClient : Client
         
         port = 12345;
         // client = new TcpClient("localhost", port);
-        client = new TcpClient("192.168.43.71", port);
+        client = new TcpClient(ConnectScript.ip, ConnectScript.port);
         clientIn = new StreamReader(client.GetStream());
         clientOut = new StreamWriter(client.GetStream());
 
@@ -80,6 +80,7 @@ public class NetworkClient : Client
         results = new List<VenueInfo>();
         wrapper.WriteLine("SEARCH");
         wrapper.WriteLine(criteria.types[0]);
+        this.criteria = criteria;
 
         bool running = true;
         while (running)

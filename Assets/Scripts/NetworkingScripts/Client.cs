@@ -13,11 +13,11 @@ public abstract class Client
     private int socket;
 
     protected SearchCriteria criteria = new SearchCriteria();
- 
+
     public abstract List<VenueInfo> RequestResults(SearchCriteria criteria);
 
     public abstract void CloseConnection();
-    
+
 
     public List<VenueInfo> filter(List<VenueInfo> venues)
     {
@@ -54,41 +54,36 @@ public abstract class Client
 
         //all the factors add a value in the range 0-20 to the score
 
-        if (criteria.occupancy.HasValue)
-        {
-            venue1Score += Mathf.Abs((venue1.occupancy - criteria.occupancy.Value)) / 5;
-            venue2Score += Mathf.Abs((venue2.occupancy - criteria.occupancy.Value)) / 5;
-        }
 
-        if (criteria.light.HasValue)
-        {
-            float exponent = Mathf.Log(criteria.light.Value) / Mathf.Log(10);
-            float exponent1 = Mathf.Log(venue1.light) / Mathf.Log(10);
-            float expoenent2 = Mathf.Log(venue2.light) / Mathf.Log(10);
-            venue1Score += Mathf.Abs(exponent - exponent1) * 4;
-            venue2Score += Mathf.Abs(exponent - expoenent2) * 4;
-        }
+        venue1Score += Mathf.Abs((venue1.occupancy - criteria.occupancy)) / 5;
+        venue2Score += Mathf.Abs((venue2.occupancy - criteria.occupancy)) / 5;
 
-        if (criteria.sound.HasValue)
-        {
-            venue1Score += Mathf.Abs((venue1.sound - criteria.sound.Value)) / 4.5f;
-            venue2Score += Mathf.Abs((venue2.sound - criteria.sound.Value)) / 4.5f;
-        }
+        Debug.Log("light: " + criteria.light);
+        float exponent = Mathf.Log(criteria.light) / Mathf.Log(10);
+        float exponent1 = Mathf.Log(venue1.light) / Mathf.Log(10);
+        float expoenent2 = Mathf.Log(venue2.light) / Mathf.Log(10);
+        venue1Score += Mathf.Abs(exponent - exponent1) * 4;
+        venue2Score += Mathf.Abs(exponent - expoenent2) * 4;
 
-        if (criteria.humidity.HasValue)
-        {
-            venue1Score += Mathf.Abs((venue1.humidity - criteria.humidity.Value)) / 5;
-            venue2Score += Mathf.Abs((venue2.humidity - criteria.humidity.Value)) / 5;
-        }
 
-        if (criteria.temperature.HasValue)
-        {
-            venue1Score += Mathf.Abs((venue1.temperature - criteria.temperature.Value));
-            venue1Score += Mathf.Abs((venue2.temperature - criteria.temperature.Value));
-        }
+        Debug.Log("sound: " + criteria.sound);
+        venue1Score += Mathf.Abs((venue1.sound - criteria.sound)) / 4.5f;
+        venue2Score += Mathf.Abs((venue2.sound - criteria.sound)) / 4.5f;
 
+
+        venue1Score += Mathf.Abs((venue1.humidity - criteria.humidity)) / 5;
+        venue2Score += Mathf.Abs((venue2.humidity - criteria.humidity)) / 5;
+
+
+        venue1Score += Mathf.Abs((venue1.temperature - criteria.temperature));
+        venue2Score += Mathf.Abs((venue2.temperature - criteria.temperature));
+
+        Debug.Log("dist: " + venue1.dist);
         venue1Score += venue1.dist * 2;
         venue2Score += venue2.dist * 2;
+
+        Debug.Log(venue1.name + ": " + venue1Score);
+        Debug.Log(venue2.name + ": " + venue2Score);
 
         if (venue1Score == venue2Score)
         {
